@@ -17,15 +17,16 @@ jobs:
       - name: Install Newman
         run: npm i -g newman newman-reporter-htmlextra newman-reporter-junitfull
         
-      - name: Run Newman
+
+      - name: Run Newman (verbose)
         run: |
           mkdir -p reports
           newman run reqres-collection.json -e reqres-env.json \
+            --verbose \
             -r cli,htmlextra,junitfull \
             --reporter-htmlextra-export reports/newman.html \
             --reporter-junitfull-export reports/junit.xml \
-            --env-var api_key=${{ secrets.API_KEY }}
-            
+            --env-var api_key=${{ secrets.API_KEY }}            
             
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
