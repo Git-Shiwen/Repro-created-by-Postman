@@ -23,7 +23,9 @@ jobs:
           newman run reqres-collection.json -e reqres-env.json \
             -r cli,htmlextra,junitfull \
             --reporter-htmlextra-export reports/newman.html \
-            --reporter-junitfull-export reports/junit.xml
+            --reporter-junitfull-export reports/junit.xml \
+            --env-var token=${{ secrets.API_TOKEN }}
+
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
