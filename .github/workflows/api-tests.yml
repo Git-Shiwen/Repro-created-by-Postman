@@ -32,9 +32,10 @@ jobs:
           path: reports/newman.html
 
       - name: Publish JUnit
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@v2
         if: always()
         with:
           name: Newman Tests
           path: reports/junit.xml
-          reporter: junit
+          reporter: java-junit   # <-- change from 'junit' to 'java-junit'
+
