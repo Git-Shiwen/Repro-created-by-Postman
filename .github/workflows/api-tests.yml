@@ -25,6 +25,12 @@ jobs:
             --reporter-htmlextra-export reports/newman.html \
             --reporter-junitfull-export reports/junit.xml \
             --env-var token=${{ secrets.API_TOKEN }}
+            
+      - name: Debug secret length
+        run: |
+          echo "Token length is: $(echo -n $API_TOKEN | wc -c)"
+        env:
+          API_TOKEN: ${{ secrets.MY_SECRET_KEY }}
 
 
       - name: Upload HTML report
