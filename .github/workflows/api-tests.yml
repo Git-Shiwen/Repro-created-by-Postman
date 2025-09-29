@@ -17,23 +17,6 @@ jobs:
       - name: Install Newman
         run: npm i -g newman newman-reporter-htmlextra newman-reporter-junitfull
         
-      - name: Debug curl (x-api-key)
-        run: |
-          set -e
-          URL="https://reqres.in"   # <-- your POST endpoint
-          echo "POST $URL"
-          HTTP_CODE=$(curl -s -o resp.json -w "%{http_code}" \
-            -H "x-api-key: $API_KEY" \
-            -H "Content-Type: application/json" \
-            --data '{"name":"Harry","job":"QA Tester"}' \
-            "$URL")
-          echo "HTTP_CODE=$HTTP_CODE"
-          cat resp.json || true
-          test "$HTTP_CODE" -ge 200 -a "$HTTP_CODE" -lt 300
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
-
-
       - name: Run Newman
         run: |
           mkdir -p reports
