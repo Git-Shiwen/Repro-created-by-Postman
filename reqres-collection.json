@@ -1,70 +1,154 @@
 {
-  "info": {
-    "_postman_id": "4152603c-ec38-4c10-b1e8-600b8bac5e22",
-    "name": "ReqRes Demo Collection",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "GET List Users",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": "{{baseURL}}/api/users?page=2"
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test('Status 200', function () {",
-              "  pm.response.to.have.status(200);",
-              "});",
-              "pm.test('JSON body object', function () {",
-              "  pm.expect(pm.response.json()).to.be.an('object');",
-              "});",
-              "pm.test('Response time < 800ms', function () {",
-              "  pm.expect(pm.response.responseTime).to.be.below(800);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "POST Create User",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"name\": \"{{name}}\",\n  \"job\": \"{{job}}\"\n}\n"
-        },
-        "url": "{{baseURL}}/api/users"
-      },
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test('Status 201', function () {",
-              "  pm.response.to.have.status(201);",
-              "});",
-              "const json = pm.response.json();",
-              "pm.test('Has id', function () {",
-              "  pm.expect(json.id).to.exist;",
-              "});"
-            ]
-          }
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "51b14d31-d723-4167-bfcb-0c9529463dfb",
+		"name": "ReqRes Demo Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46555653",
+		"_collection_link": "https://sw-7701855.postman.co/workspace/SW's-Workspace~c9e052ba-4436-40ab-85fb-6c50b61b027b/collection/46555653-51b14d31-d723-4167-bfcb-0c9529463dfb?action=share&source=collection_link&creator=46555653"
+	},
+	"item": [
+		{
+			"name": "GET List Users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status 200', function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test('JSON body object', function () {",
+							"  pm.expect(pm.response.json()).to.be.an('object');",
+							"});",
+							"pm.test('Response time < 800ms', function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(800);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/users?page=2",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// --- Safe request debug (masks x-api-key) ---",
+							"const req = pm.request.clone();",
+							"let hdrs = {};",
+							"req.headers.each(h => {",
+							"  hdrs[h.key] = h.key.toLowerCase() === 'x-api-key' ? '***' : h.value;",
+							"});",
+							"console.log('[REQ]', req.method, req.url.toString(), hdrs);",
+							"",
+							"// --- Response debug (status + a small body preview) ---",
+							"console.log('[RESP]', pm.response.code, pm.response.status);",
+							"try {",
+							"  const j = pm.response.json();",
+							"  console.log('[RESP-BODY]', JSON.stringify(j).slice(0, 400));",
+							"} catch(e) {",
+							"  console.log('[RESP-BODY-TEXT]', pm.response.text().slice(0, 400));",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true,
+					"user-agent": true,
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true,
+					"content-length": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"{{name}}\",\n  \"job\": \"{{job}}\"\n}\n"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/users",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "reqres-free-v1",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
 }
