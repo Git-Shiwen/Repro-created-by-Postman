@@ -1,0 +1,70 @@
+{
+  "info": {
+    "_postman_id": "4152603c-ec38-4c10-b1e8-600b8bac5e22",
+    "name": "ReqRes Demo Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "GET List Users",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/api/users?page=2"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('JSON body object', function () {",
+              "  pm.expect(pm.response.json()).to.be.an('object');",
+              "});",
+              "pm.test('Response time < 800ms', function () {",
+              "  pm.expect(pm.response.responseTime).to.be.below(800);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST Create User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"{{name}}\",\n  \"job\": \"{{job}}\"\n}\n"
+        },
+        "url": "{{baseURL}}/api/users"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', function () {",
+              "  pm.response.to.have.status(201);",
+              "});",
+              "const json = pm.response.json();",
+              "pm.test('Has id', function () {",
+              "  pm.expect(json.id).to.exist;",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

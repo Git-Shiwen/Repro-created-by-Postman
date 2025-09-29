@@ -1,0 +1,37 @@
+name: API Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Newman
+        run: npm i -g newman newman-reporter-htmlextra newman-reporter-junitfull
+
+      - name: Run Newman
+        run: |
+          mkdir -p reports
+          newman run reqres-collection.json -e reqres-env.json             -r cli,htmlextra,junitfull             --reporter-htmlextra-export reports/newman.html             --reporter-junitfull-export reports/junit.xml
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: reports/newman.html
+
+      - name: Publish JUnit
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Newman Tests
+          path: reports/junit.xml
+          reporter: junit

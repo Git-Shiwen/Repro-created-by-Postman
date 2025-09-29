@@ -1,0 +1,27 @@
+{
+  "id": "e1fe0329-b467-4feb-9021-469e4ff5980f",
+  "name": "ReqRes Demo Env",
+  "values": [
+    {
+      "key": "baseURL",
+      "value": "https://reqres.in",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "name",
+      "value": "Harry",
+      "type": "default",
+      "enabled": true
+    },
+    {
+      "key": "job",
+      "value": "QA Tester",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2025-09-29T08:15:24Z",
+  "_postman_exported_using": "ChatGPT Starter"
+}
