@@ -24,7 +24,7 @@ jobs:
             -r cli,htmlextra,junitfull \
             --reporter-htmlextra-export reports/newman.html \
             --reporter-junitfull-export reports/junit.xml \
-            --env-var api_key=reqres-free-v1
+            --env-var api_key=${{ secrets.API_KEY }}
             
             
       - name: Upload HTML report
